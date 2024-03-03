@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/template :: layout(~{::title}, ~{::body/content()})}">
+<head>
+    <title>users</title>
+</head>
+<body>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">
+                <h1>ユーザー詳細</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" th:object="${user}">
+                <div class="row mb-3">
+                    <label for="userId" class="col-sm-2 col-form-label">ユーザーID</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" th:field="*{id}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="username" class="col-sm-2 col-form-label">ユーザー名</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" th:field="*{username}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

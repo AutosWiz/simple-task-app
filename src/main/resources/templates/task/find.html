@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/template :: layout(~{::title}, ~{::body/content()})}">
+<head>
+    <title>tasks</title>
+</head>
+<body>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">
+                <h1>タスク一覧</h1>
+            </div>
+        </div>
+        <div class="row">
+            <nav class="nav justify-content-center">
+                <a class="nav-link" th:href="@{/tasks/new}">新規作成</a>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">タイトル</th>
+                        <th scope="col">期日</th>
+                        <th scope="col">ステータス</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="task, stat : ${tasks}">
+                        <td scope="row" th:text="${stat.count}"></td>
+                        <td th:text="${task.taskTitle}"></td>
+                        <td th:text="${#temporals.format(task.dueDate, 'yyyy/MM/dd')}"></td>
+                        <td th:text="${task.taskStatus}"></td>
+                        <td>
+                            <a class="btn btn-outline-primary" th:href="@{/tasks/__${task.taskId}__}" role="button">詳細</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

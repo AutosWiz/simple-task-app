@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/template :: layout(~{::title}, ~{::body/content()})}">
+<head>
+    <title>tasks</title>
+</head>
+<body>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">
+                <h1>編集</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form th:action="@{/tasks/edit/__${taskForm.taskId}__}" th:object="${taskForm}" method="post">
+                    <div class="row mb-3">
+                        <label for="taskTitle" class="col-sm-2 col-form-label">タイトル</label>
+                        <div class="col-sm-10" th:with="hasErrors=${#fields.hasErrors('taskTitle')}">
+                            <input th:field="*{taskTitle}" type="text" class="form-control" th:classappend="${hasErrors ? 'is-invalid' : ''}">
+                            <div th:if="${hasErrors}" th:errors="*{taskTitle}" class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="taskDescription" class="col-sm-2 col-form-label">説明</label>
+                        <div class="col-sm-10" th:with="hasErrors=${#fields.hasErrors('taskDescription')}">
+                            <input th:field="*{taskDescription}" type="text" class="form-control" th:classappend="${hasErrors ? 'is-invalid' : ''}">
+                            <div th:if="${hasErrors}" th:errors="*{taskDescription}" class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="taskTitle" class="col-sm-2 col-form-label">期日</label>
+                        <div class="col-sm-10" th:with="hasErrors=${#fields.hasErrors('dueDate')}">
+                            <input id="flatpickr" th:field="*{dueDate}" type="text" class="form-control" th:classappend="${hasErrors ? 'is-invalid' : ''}">
+                            <div th:if="${hasErrors}" th:errors="*{dueDate}" class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <a class="btn btn-outline-primary" th:href="@{/tasks/__*{taskId}__}">戻る</a>
+                    <button type="submit" class="btn btn-outline-primary">登録</button>
+                    <button type="submit" class="btn btn-outline-danger" th:formaction="@{/tasks/delete/__*{taskId}__}">削除</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            flatpickr("#flatpickr", {
+                locale: 'ja',
+                dateFormat: 'Y/m/d',
+            });
+        });
+    </script>
+</body>
+</html>

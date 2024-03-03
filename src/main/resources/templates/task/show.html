@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/template :: layout(~{::title}, ~{::body/content()})}">
+<head>
+    <title>tasks</title>
+</head>
+<body>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">
+                <h1>詳細</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" th:object="${task}">
+                <div class="row mb-3">
+                    <label for="taskTitle" class="col-sm-2 col-form-label">タイトル</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" th:field="*{taskTitle}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="taskDescription" class="col-sm-2 col-form-label">説明</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" th:field="*{taskDescription}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="taskTitle" class="col-sm-2 col-form-label">期日</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control-plaintext" th:field="*{dueDate}">
+                    </div>
+                </div>
+                <form th:action="@{/tasks/transition/__*{taskId}__}" method="post">
+                    <div class="row mb-3">
+                        <label for="taskStatus" class="col-sm-2 col-form-label">ステータス</label>
+                        <div class="col-sm-6">
+                            <select class="form-select" aria-label="select taskStatus" th:field="*{taskStatus}">
+                                <option th:each="status : ${taskStatusSet}" th:text="${status}" th:value="${status}"></option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="submit" class="btn btn-outline-primary">ステータスを更新</button>
+                        </div>
+                    </div>
+                </form>
+                <a class="btn btn-outline-primary" th:href="@{/tasks}">戻る</a>
+                <a class="btn btn-outline-primary" th:href="@{/tasks/edit/__${task.taskId}__}" role="button">編集</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
